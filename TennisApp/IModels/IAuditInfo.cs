@@ -1,4 +1,4 @@
-﻿namespace Tennis_Club.Data.Common
+﻿namespace TennisApp.Data.Common
 {
     using System;
 

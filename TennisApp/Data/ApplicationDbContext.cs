@@ -159,6 +159,32 @@ namespace TennisApp.Data
                       .HasForeignKey(cl => cl.LessonId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
+            
+
+            // ApplicationUserConfiguration
+
+            var appUser = builder.Entity<ApplicationUser>();
+
+            appUser
+                .HasMany(e => e.Claims)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasMany(e => e.Logins)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasMany(e => e.Roles)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

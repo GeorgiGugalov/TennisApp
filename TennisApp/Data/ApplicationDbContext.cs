@@ -5,7 +5,7 @@ using TennisApp.Models;
 
 namespace TennisApp.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -157,7 +157,7 @@ namespace TennisApp.Data
                 entity.HasOne(cl => cl.Lesson)
                       .WithMany(l => l.CoachLessons)
                       .HasForeignKey(cl => cl.LessonId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.NoAction);
             });
             
 

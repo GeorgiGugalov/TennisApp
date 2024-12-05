@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TennisApp.Models;
 
 namespace TennisApp.Controllers
 {

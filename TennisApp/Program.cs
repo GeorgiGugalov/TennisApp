@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TennisApp.Data;
+using TennisApp.Data.Models;
 
-namespace TennisApp
+namespace TennisApp.Web
 {
     public class Program
     {
@@ -14,11 +15,18 @@ namespace TennisApp
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(IdentityOptionsProvider.GetIdentityOptions)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true);
+            //builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+            //    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddRazorPages();
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             var app = builder.Build();
 
@@ -38,7 +46,8 @@ namespace TennisApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            //Fix
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

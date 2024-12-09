@@ -20,3 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.text-center {
+}
+
+.home-title {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.display-4{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.home-image {
+    width: stretch;
+}

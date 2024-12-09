@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TennisApp.Common.Repositories;
 using TennisApp.Data;
 using TennisApp.Data.Models;
+using TennisApp.Data.Repositories;
+using TennisApp.Web.Infrastructure.Repositories;
 
 namespace TennisApp.Web
 {
@@ -11,20 +14,23 @@ namespace TennisApp.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            
+            // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true);
-            //builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-            //    .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             builder.Services.AddRazorPages();
 
             builder.Services.AddControllersWithViews();
+
+            //Register repositories in the DI container
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            //Register Generic repositories
+            builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

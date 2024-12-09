@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TennisApp.Data.Common\TennisApp.Data.Common.csproj" />
+    <ProjectReference Include="..\TennisApp.Data.Models\TennisApp.Data.Models.csproj" />
+    <ProjectReference Include="..\TennisApp.Data\TennisApp.Data.csproj" />
+  </ItemGroup>
+
 </Project>

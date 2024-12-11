@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TennisApp.Data.Models\TennisApp.Data.Models.csproj" />
+    <ProjectReference Include="..\TennisApp.Web.Infrastructure\TennisApp.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\TennisApp.Web.ViewModels\TennisApp.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,8 @@ using TennisApp.Common.Repositories;
 using TennisApp.Data;
 using TennisApp.Data.Models;
 using TennisApp.Data.Repositories;
+using TennisApp.Services.Interfaces;
+using TennisApp.Services;
 using TennisApp.Web.Infrastructure.Repositories;
 
 namespace TennisApp.Web
@@ -19,9 +21,15 @@ namespace TennisApp.Web
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
             builder.Services.AddRazorPages();
 
@@ -31,6 +39,7 @@ namespace TennisApp.Web
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             //Register Generic repositories
             builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

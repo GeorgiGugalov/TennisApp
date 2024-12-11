@@ -8,34 +8,34 @@ namespace TennisApp.Data.Repositories
     {
         public Repository(ApplicationDbContext context)
         {
-            this.Context = context ?? throw new ArgumentNullException(nameof(context));
-            this.DbSet = this.Context.Set<TEntity>();
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.dbSet = this.context.Set<TEntity>();
         }
 
-        protected DbSet<TEntity> DbSet { get; set; }
+        protected DbSet<TEntity> dbSet { get; set; }
 
-        protected ApplicationDbContext Context { get; set; }
+        protected ApplicationDbContext context { get; set; }
 
-        public virtual IQueryable<TEntity> All() => this.DbSet;
+        public virtual IQueryable<TEntity> All() => this.dbSet;
 
-        public virtual IQueryable<TEntity> AllAsNoTracking() => this.DbSet.AsNoTracking();
+        public virtual IQueryable<TEntity> AllAsNoTracking() => this.dbSet.AsNoTracking();
 
-        public virtual Task AddAsync(TEntity entity) => this.DbSet.AddAsync(entity).AsTask();
+        public virtual Task AddAsync(TEntity entity) => this.dbSet.AddAsync(entity).AsTask();
 
         public virtual void Update(TEntity entity)
         {
-            var entry = this.Context.Entry(entity);
+            var entry = this.context.Entry(entity);
             if (entry.State == EntityState.Detached)
             {
-                this.DbSet.Attach(entity);
+                this.dbSet.Attach(entity);
             }
 
             entry.State = EntityState.Modified;
         }
 
-        public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
+        public virtual void Delete(TEntity entity) => this.dbSet.Remove(entity);
 
-        public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
+        public Task<int> SaveChangesAsync() => this.context.SaveChangesAsync();
 
         public void Dispose()
         {
@@ -47,7 +47,7 @@ namespace TennisApp.Data.Repositories
         {
             if (disposing)
             {
-                this.Context?.Dispose();
+                this.context?.Dispose();
             }
         }
     }

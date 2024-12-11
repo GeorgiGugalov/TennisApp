@@ -17,37 +17,10 @@ namespace TennisApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -102,12 +75,10 @@ namespace TennisApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -144,12 +115,10 @@ namespace TennisApp.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -159,7 +128,48 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TennisApp.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.ApplicationRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("TennisApp.Data.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -232,6 +242,8 @@ namespace TennisApp.Data.Migrations
 
                     b.HasIndex("CoachId");
 
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -243,7 +255,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Booking", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Booking", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -269,7 +281,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Coach", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Coach", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,7 +308,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("Coaches");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.CoachLesson", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.CoachLesson", b =>
                 {
                     b.Property<Guid>("CoachId")
                         .HasColumnType("uniqueidentifier");
@@ -311,7 +323,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("CoachLessons");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Court", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Court", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -337,7 +349,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("Courts");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Lesson", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Lesson", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -368,7 +380,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Member", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Member", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -402,7 +414,7 @@ namespace TennisApp.Data.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Setting", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -432,21 +444,23 @@ namespace TennisApp.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IsDeleted");
+
                     b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TennisApp.Models.ApplicationUser", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationUser", null)
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -455,7 +469,7 @@ namespace TennisApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TennisApp.Models.ApplicationUser", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationUser", null)
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -464,13 +478,13 @@ namespace TennisApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TennisApp.Models.ApplicationUser", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationUser", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -479,31 +493,31 @@ namespace TennisApp.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TennisApp.Models.ApplicationUser", null)
+                    b.HasOne("TennisApp.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TennisApp.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("TennisApp.Models.ApplicationUser", "Coach")
+                    b.HasOne("TennisApp.Data.Models.ApplicationUser", "Coach")
                         .WithMany()
                         .HasForeignKey("CoachId");
 
                     b.Navigation("Coach");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Booking", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Booking", b =>
                 {
-                    b.HasOne("TennisApp.Models.Court", "Court")
+                    b.HasOne("TennisApp.Data.Models.Court", "Court")
                         .WithMany("Bookings")
                         .HasForeignKey("CourtId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisApp.Models.Member", "Member")
+                    b.HasOne("TennisApp.Data.Models.Member", "Member")
                         .WithMany("Bookings")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -514,15 +528,15 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.CoachLesson", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.CoachLesson", b =>
                 {
-                    b.HasOne("TennisApp.Models.Coach", "Coach")
+                    b.HasOne("TennisApp.Data.Models.Coach", "Coach")
                         .WithMany("CoachLessons")
                         .HasForeignKey("CoachId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisApp.Models.Lesson", "Lesson")
+                    b.HasOne("TennisApp.Data.Models.Lesson", "Lesson")
                         .WithMany("CoachLessons")
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -533,21 +547,21 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Lesson");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Lesson", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Lesson", b =>
                 {
-                    b.HasOne("TennisApp.Models.Coach", "Coach")
+                    b.HasOne("TennisApp.Data.Models.Coach", "Coach")
                         .WithMany("Lessons")
                         .HasForeignKey("CoachId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisApp.Models.Court", "Court")
+                    b.HasOne("TennisApp.Data.Models.Court", "Court")
                         .WithMany("Lessons")
                         .HasForeignKey("CourtId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisApp.Models.Member", "Member")
+                    b.HasOne("TennisApp.Data.Models.Member", "Member")
                         .WithMany("Lessons")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -560,9 +574,9 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Member", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Member", b =>
                 {
-                    b.HasOne("TennisApp.Models.Coach", "Coach")
+                    b.HasOne("TennisApp.Data.Models.Coach", "Coach")
                         .WithMany("Members")
                         .HasForeignKey("CoachId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -571,7 +585,7 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Coach");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
 
@@ -580,7 +594,7 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Coach", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Coach", b =>
                 {
                     b.Navigation("CoachLessons");
 
@@ -589,19 +603,19 @@ namespace TennisApp.Data.Migrations
                     b.Navigation("Members");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Court", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Court", b =>
                 {
                     b.Navigation("Bookings");
 
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Lesson", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Lesson", b =>
                 {
                     b.Navigation("CoachLessons");
                 });
 
-            modelBuilder.Entity("TennisApp.Models.Member", b =>
+            modelBuilder.Entity("TennisApp.Data.Models.Member", b =>
                 {
                     b.Navigation("Bookings");
 
